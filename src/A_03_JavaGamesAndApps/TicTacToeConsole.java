@@ -19,12 +19,16 @@ public class TicTacToeConsole {
                 playTurn(scanner, playingBoard, player);
                 haveWinner = checkRowCol(playingBoard, player) || checkDiagonal(playingBoard, player);
                 player = 'x';
+                if (haveWinner)
+                    System.out.println("Player O WINS!!");
 
             } else if (player == 'x') {
                 System.out.println("Turn X, choose 1-9 :");
                 playTurn(scanner, playingBoard, player);
-
+                haveWinner = checkRowCol(playingBoard, player) || checkDiagonal(playingBoard, player);
                 player = 'o';
+                if (haveWinner)
+                    System.out.println("Player X WINS!!");
             }
 
         }
@@ -35,10 +39,18 @@ public class TicTacToeConsole {
     }
 
     private static boolean checkDiagonal(char[][] playingBoard, char player) {
-        for (int r = 0; r < 5; r += 2) {
-            int foundOnMainDiagonal = 0;
-            if (playingBoard[r][r] == player) {
+        int foundOnMainDiagonal = 0;
+        int foundOnSecondaryDiagonal = 0;
 
+        for (int r = 0; r < 5; r += 2) {
+            if (playingBoard[r][r] == player) {
+                foundOnMainDiagonal++;
+            }
+            if (playingBoard[r][4 - r] == player) {
+                foundOnSecondaryDiagonal++;
+            }
+            if (foundOnMainDiagonal == 3 || foundOnSecondaryDiagonal == 3) {
+                return true;
             }
         }
         return false;
@@ -65,34 +77,66 @@ public class TicTacToeConsole {
     }
 
     private static void playTurn(Scanner scanner, char[][] playingBoard, char player) {
+        boolean invalidMove = true;
         switch (scanner.nextLine()) {
             case "1":
-                playingBoard[0][0] = player;
+                if (playingBoard[0][0] == ' ') {
+                    playingBoard[0][0] = player;
+                    invalidMove = false;
+                }
                 break;
             case "2":
-                playingBoard[0][2] = player;
+                if (playingBoard[0][2] == ' ') {
+                    playingBoard[0][2] = player;
+                    invalidMove = false;
+                }
                 break;
             case "3":
-                playingBoard[0][4] = player;
+                if (playingBoard[0][4] == ' ') {
+                    playingBoard[0][4] = player;
+                    invalidMove = false;
+                }
                 break;
             case "4":
-                playingBoard[2][0] = player;
+                if (playingBoard[2][0] == ' ') {
+                    playingBoard[2][0] = player;
+                    invalidMove = false;
+                }
                 break;
             case "5":
-                playingBoard[2][2] = player;
+                if (playingBoard[2][2] == ' ') {
+                    playingBoard[2][2] = player;
+                    invalidMove = false;
+                }
                 break;
             case "6":
-                playingBoard[2][4] = player;
+                if (playingBoard[2][4] == ' ') {
+                    playingBoard[2][4] = player;
+                    invalidMove = false;
+                }
                 break;
             case "7":
-                playingBoard[4][0] = player;
+                if (playingBoard[4][0] == ' ') {
+                    playingBoard[4][0] = player;
+                    invalidMove = false;
+                }
                 break;
             case "8":
-                playingBoard[4][2] = player;
+                if (playingBoard[4][2] == ' ') {
+                    playingBoard[4][2] = player;
+                    invalidMove = false;
+                }
                 break;
             case "9":
-                playingBoard[4][4] = player;
+                if (playingBoard[4][4] == ' ') {
+                    playingBoard[4][4] = player;
+                    invalidMove = false;
+                }
                 break;
+        }
+        if (invalidMove) {
+            System.out.println("Invalid Move Try Again!");
+            playTurn(scanner, playingBoard, player);
         }
     }
 
